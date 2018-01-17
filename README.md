@@ -286,6 +286,13 @@ curl -s -X GET \
   -H "authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0OTQ4NjU1OTEsInVzZXJuYW1lIjoiSmltIiwib3JnTmFtZSI6Im9yZzEiLCJpYXQiOjE0OTQ4NjE5OTF9.yWaJhFDuTvMQRaZIqg20Is5t-JJ_1BP58yrNLOKxtNI" \
   -H "content-type: application/json"
 ```
+**Output:**
+```
+[
+    "name: mycc1, version: v0, path: github.com/cshbond",
+    "name: mycc2, version: v0, path: github.com/bondtransfer"
+]
+```
 
 ### Query Instantiated chaincodes
 
@@ -294,6 +301,13 @@ curl -s -X GET \
   "http://localhost:4000/chaincodes?peer=peer1&type=instantiated" \
   -H "authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0OTQ4NjU1OTEsInVzZXJuYW1lIjoiSmltIiwib3JnTmFtZSI6Im9yZzEiLCJpYXQiOjE0OTQ4NjE5OTF9.yWaJhFDuTvMQRaZIqg20Is5t-JJ_1BP58yrNLOKxtNI" \
   -H "content-type: application/json"
+```
+**Output:**
+```
+[
+    "name: mycc1, version: v0, path: github.com/cshbond",
+    "name: mycc2, version: v0, path: github.com/bondtransfer"
+]
 ```
 
 ### Query Channels
@@ -304,56 +318,14 @@ curl -s -X GET \
   -H "authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0OTQ4NjU1OTEsInVzZXJuYW1lIjoiSmltIiwib3JnTmFtZSI6Im9yZzEiLCJpYXQiOjE0OTQ4NjE5OTF9.yWaJhFDuTvMQRaZIqg20Is5t-JJ_1BP58yrNLOKxtNI" \
   -H "content-type: application/json"
 ```
-
-### Network configuration considerations
-
-You have the ability to change configuration parameters by either directly editing the network-config.json file or provide an additional file for an alternative target network. The app uses an optional environment variable "TARGET_NETWORK" to control the configuration files to use. For example, if you deployed the target network on Amazon Web Services EC2, you can add a file "network-config-aws.json", and set the "TARGET_NETWORK" environment to 'aws'. The app will pick up the settings inside the "network-config-aws.json" file.
-
-#### IP Address** and PORT information
-
-If you choose to customize your docker-compose yaml file by hardcoding IP Addresses and PORT information for your peers and orderer, then you MUST also add the identical values into the network-config.json file. The paths shown below will need to be adjusted to match your docker-compose yaml file.
-
+**Output:**
 ```
-		"orderer": {
-			"url": "grpcs://x.x.x.x:7050",
-			"server-hostname": "orderer0",
-			"tls_cacerts": "../artifacts/tls/orderer/ca-cert.pem"
-		},
-		"org1": {
-			"ca": "http://x.x.x.x:7054",
-			"peer1": {
-				"requests": "grpcs://x.x.x.x:7051",
-				"events": "grpcs://x.x.x.x:7053",
-				...
-			},
-			"peer2": {
-				"requests": "grpcs://x.x.x.x:7056",
-				"events": "grpcs://x.x.x.x:7058",
-				...
-			}
-		},
-		"org2": {
-			"ca": "http://x.x.x.x:8054",
-			"peer1": {
-				"requests": "grpcs://x.x.x.x:8051",
-				"events": "grpcs://x.x.x.x:8053",
-				...			},
-			"peer2": {
-				"requests": "grpcs://x.x.x.x:8056",
-				"events": "grpcs://x.x.x.x:8058",
-				...
-			}
-		}
-
+{
+    "channels": [
+        {
+            "channel_id": "mychannel"
+        }
+    ]
+}
 ```
 
-#### Discover IP Address
-
-To retrieve the IP Address for one of your network entities, issue the following command:
-
-```
-# this will return the IP Address for peer0
-docker inspect peer0 | grep IPAddress
-```
-
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
